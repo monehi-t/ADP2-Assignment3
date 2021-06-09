@@ -32,7 +32,7 @@ public class ReadSerFile {
     ObjectInputStream objectInputStream;
     
     //Add Writers
-    BufferedWriter bufferWriter;
+    BufferedWriter bufferW;
     FileWriter fileWriter;
 
     
@@ -73,7 +73,7 @@ public class ReadSerFile {
                } else if ( name.equals(b)){
                    supplierArray.add((Supplier)line);
                } else {
-                   System.out.println("It did not work");
+                   System.out.println("Not working. Something went wrong!");
                }
            } 
         }
@@ -138,17 +138,17 @@ public class ReadSerFile {
     public void displayCustomer(){
         try{
             fileWriter = new FileWriter("customerOutFile.txt");
-            bufferWriter = new BufferedWriter(fileWriter);
-            bufferWriter.write(String.format("%s\n","===============================Customers========================================"));
+            bufferW = new BufferedWriter(fileWriter);
+            bufferW.write(String.format("%s\n","===============================Customers========================================"));
             
-            bufferWriter.write(String.format("%-15s %-15s %-15s %-15s %-15s\n", "ID","Name","Surname","Date of Birth","Age"));
-             bufferWriter.write(String.format("%s\n","================================================================================"));
+            bufferW.write(String.format("%-15s %-15s %-15s %-15s %-15s\n", "ID","Name","Surname","Date of Birth","Age"));
+             bufferW.write(String.format("%s\n","================================================================================"));
             for (int n = 0; n < customerArray.size(); n++) {
-                bufferWriter.write(String.format("%-15s %-15s %-15s %-15s %-15s \n", customerArray.get(n).getStHolderId(), customerArray.get(n).getFirstName(), customerArray.get(n).getSurName(), formatDob(customerArray.get(n)), determinetAge(customerArray.get(n).getDateOfBirth())));
+                bufferW.write(String.format("%-15s %-15s %-15s %-15s %-15s \n", customerArray.get(n).getStHolderId(), customerArray.get(n).getFirstName(), customerArray.get(n).getSurName(), formatDob(customerArray.get(n)), determinetAge(customerArray.get(n).getDateOfBirth())));
             }
-            bufferWriter.write(String.format("%s\n"," "));
-            bufferWriter.write(String.format("%s\n"," "));
-            bufferWriter.write(String.format("%s\n",rent()));
+            bufferW.write(String.format("%s\n"," "));
+            bufferW.write(String.format("%s\n"," "));
+            bufferW.write(String.format("%s\n",rentCustomer()));
         }
         catch(IOException fnfe )
         {
@@ -156,7 +156,7 @@ public class ReadSerFile {
             System.exit(1);
         }
         try{
-            bufferWriter.close( ); 
+            bufferW.close( ); 
         }
         catch (IOException ioe){            
             System.out.println("error closing text file: " + ioe.getMessage());
@@ -166,7 +166,7 @@ public class ReadSerFile {
     
     
     //Determing & printing number of customers that can/cannot rent
-    public String rent(){
+    public String rentCustomer(){
         int number = customerArray.size();
         int canRent = 0;
         int cannotRent = 0;
@@ -211,13 +211,13 @@ public class ReadSerFile {
      public void displaySupplier(){
         try{
             fileWriter = new FileWriter("supplierOutFile.txt");
-            bufferWriter = new BufferedWriter(fileWriter);
-            bufferWriter.write(String.format("%s\n","===========================SUPPLIERS=========================================="));
+            bufferW = new BufferedWriter(fileWriter);
+            bufferW.write(String.format("%s\n","===========================SUPPLIERS=========================================="));
            
-            bufferWriter.write(String.format("%-15s %-15s \t %-15s %-15s \n", "ID","Name","Prod Type","Description"));
-            bufferWriter.write("==============================================================================\n");
+            bufferW.write(String.format("%-15s %-15s \t %-15s %-15s \n", "ID","Name","Prod Type","Description"));
+            bufferW.write("==============================================================================\n");
             for (int i = 0; i < supplierArray.size(); i++) {
-                bufferWriter.write(String.format("%-15s %-15s \t %-15s %-15s \n", supplierArray.get(i).getStHolderId(), supplierArray.get(i).getName(), supplierArray.get(i).getProductType(),supplierArray.get(i).getProductDescription()));
+                bufferW.write(String.format("%-15s %-15s \t %-15s %-15s \n", supplierArray.get(i).getStHolderId(), supplierArray.get(i).getName(), supplierArray.get(i).getProductType(),supplierArray.get(i).getProductDescription()));
             }
             System.out.println("Supplier Text file created and information is displayed.");
             
@@ -228,7 +228,7 @@ public class ReadSerFile {
             System.exit(1);
         }
         try{
-            bufferWriter.close( ); 
+            bufferW.close( ); 
         }
         catch (IOException ioe){            
             System.out.println("error closing text file: " + ioe.getMessage());
