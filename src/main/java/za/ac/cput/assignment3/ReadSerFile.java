@@ -94,23 +94,23 @@ public class ReadSerFile {
     
      //Sort Customer in ascending order
     public void sortCustomer(){
-        String[] sortID = new String[customerArray.size()];
-        ArrayList<Customer> sortA= new ArrayList<Customer>();
+        String[] customerID = new String[customerArray.size()];
+        ArrayList<Customer> cArray= new ArrayList<Customer>();
         int count = customerArray.size();
         for (int i = 0; i < count; i++) {
-            sortID[i] = customerArray.get(i).getStHolderId();
+            customerID[i] = customerArray.get(i).getStHolderId();
         }
-        Arrays.sort(sortID);
+        Arrays.sort(customerID);
         
         for (int i = 0; i < count; i++) {
             for (int j = 0; j < count; j++) {
-                if (sortID[i].equals(customerArray.get(j).getStHolderId())){
-                    sortA.add(customerArray.get(j));
+                if (customerID[i].equals(customerArray.get(j).getStHolderId())){
+                    cArray.add(customerArray.get(j));
                 }
             }
         }
         customerArray.clear();
-        customerArray = sortA;
+        customerArray = cArray;
     }
     
     
@@ -118,9 +118,9 @@ public class ReadSerFile {
     public int determinetAge(String dob){
         String[] seperation = dob.split("-");
         
-        LocalDate birth = LocalDate.of(Integer.parseInt(seperation[0]), Integer.parseInt(seperation[1]), Integer.parseInt(seperation[2]));
-        LocalDate current = LocalDate.now();
-        Period difference = Period.between(birth, current);
+        LocalDate birthDate = LocalDate.of(Integer.parseInt(seperation[0]), Integer.parseInt(seperation[1]), Integer.parseInt(seperation[2]));
+        LocalDate currentDate = LocalDate.now();
+        Period difference = Period.between(birthDate, currentDate);
         int age = difference.getYears();
         return age;
     }
@@ -128,9 +128,9 @@ public class ReadSerFile {
     
     //Changing the formate of the date of birth
     public String formatDob(Customer dob){
-        LocalDate dateOfBirthToFormat = LocalDate.parse(dob.getDateOfBirth());
+        LocalDate birthdayFormat = LocalDate.parse(dob.getDateOfBirth());
         DateTimeFormatter changeFormat = DateTimeFormatter.ofPattern("dd MMM yyyy");
-        return dateOfBirthToFormat.format(changeFormat);
+        return birthdayFormat.format(changeFormat);
     }
     
     
@@ -143,8 +143,8 @@ public class ReadSerFile {
             
             bufferWriter.write(String.format("%-15s %-15s %-15s %-15s %-15s\n", "ID","Name","Surname","Date of Birth","Age"));
              bufferWriter.write(String.format("%s\n","================================================================================"));
-            for (int i = 0; i < customerArray.size(); i++) {
-                bufferWriter.write(String.format("%-15s %-15s %-15s %-15s %-15s \n", customerArray.get(i).getStHolderId(), customerArray.get(i).getFirstName(), customerArray.get(i).getSurName(), formatDob(customerArray.get(i)), determinetAge(customerArray.get(i).getDateOfBirth())));
+            for (int n = 0; n < customerArray.size(); n++) {
+                bufferWriter.write(String.format("%-15s %-15s %-15s %-15s %-15s \n", customerArray.get(n).getStHolderId(), customerArray.get(n).getFirstName(), customerArray.get(n).getSurName(), formatDob(customerArray.get(n)), determinetAge(customerArray.get(n).getDateOfBirth())));
             }
             bufferWriter.write(String.format("%s\n"," "));
             bufferWriter.write(String.format("%s\n"," "));
@@ -169,15 +169,15 @@ public class ReadSerFile {
     public String rent(){
         int number = customerArray.size();
         int canRent = 0;
-        int notRent = 0;
-        for (int i = 0; i < number; i++) {
-            if (customerArray.get(i).getCanRent()){
+        int cannotRent = 0;
+        for (int n = 0; n < number; n++) {
+            if (customerArray.get(n).getCanRent()){
                 canRent++;
             }else {
-                notRent++;
+                cannotRent++;
             }
         }
-        String line = "Number of customers who can rent a car : "+ '\t' + canRent + '\n' + "Number of customers who cannot rent a car : "+ '\t' + notRent;
+        String line = "Number of customers who can rent a car : "+ '\t' + canRent + '\n' + "Number of customers who cannot rent a car : "+ '\t' + cannotRent;
         return line;
     }
     
@@ -187,23 +187,23 @@ public class ReadSerFile {
     
     //Sort Suppliers in ascending order
     public void sortSuppliers(){
-        String[] sortID = new String[supplierArray.size()];
-        ArrayList<Supplier> sortA= new ArrayList<Supplier>();
+        String[] supplierID = new String[supplierArray.size()];
+        ArrayList<Supplier> sArray= new ArrayList<Supplier>();
         int number = supplierArray.size();
-        for (int i = 0; i < number; i++) {
-            sortID[i] = supplierArray.get(i).getName();
+        for (int n = 0; n < number; n++) {
+            supplierID[n] = supplierArray.get(n).getName();
         }
-        Arrays.sort(sortID);
+        Arrays.sort(supplierID);
         
-        for (int i = 0; i < number; i++) {
-            for (int j = 0; j < number; j++) {
-                if (sortID[i].equals(supplierArray.get(j).getName())){
-                    sortA.add(supplierArray.get(j));
+        for (int n = 0; n < number; n++) {
+            for (int m = 0; m < number; m++) {
+                if (supplierID[n].equals(supplierArray.get(m).getName())){
+                    sArray.add(supplierArray.get(m));
                 }
             }
         }
         supplierArray.clear();
-        supplierArray = sortA;
+        supplierArray = sArray;
     }
     
     
